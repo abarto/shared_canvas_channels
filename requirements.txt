@@ -1,0 +1,7 @@
+Django==1.9.4
+django-jwt-auth==0.0.2
+channels==0.9.5
+asgiref==0.9.1
+daphne==0.9.3
+asgi-redis==0.8.3
+redis==2.10.5
