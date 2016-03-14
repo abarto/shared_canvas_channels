@@ -1,0 +1,10 @@
+db.sqlite3
+.idea
+__pycache__
+*.pyc
+shared_canvas_channels_venv/
+.vagrant
+static/
+components/
+*.log
+*.pid
