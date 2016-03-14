@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'shared_canvas_channels.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'shared_canvas_channels',
+        'USER': 'shared_canvas_channels',
+        'PASSWORD': 'shared_canvas_channels',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

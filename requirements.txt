@@ -5,3 +5,4 @@ asgiref==0.9.1
 daphne==0.9.3
 asgi-redis==0.8.3
 redis==2.10.5
+psycopg2==2.6.1
