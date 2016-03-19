@@ -1,0 +1,90 @@
+body {
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.center-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-form {
+    display: block;
+    width: 30vw;
+}
+
+.login-text {
+    font-size: 3vh;
+    font-weight: 900;
+}
+
+.login-form-panel {
+    background-color: #ccc;
+    padding: 10px;
+}
+
+.canvas-container {
+    display: none;
+    background-color: #ccc;
+    width: 98vw;
+    height: 98vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    padding: 1vh 1vw 1vh 1vw;
+}
+
+.title-panel {
+    font-size: 3vh;
+    font-weight: 900;
+    align-self: stretch;
+}
+
+.sketch {
+    background-color: white;
+    margin-bottom: 1vh;
+}
+
+.log-panel {
+    background-color: white;
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+}
+
+.log-panel-title {
+    font-weight: 900;
+    background-color: #666;
+    color: white;
+    padding: 2px;
+}
+
+.log-entries {
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.log-entry {
+    margin-top: 2px;
+    background-color: #ddd;
+}
+
+.log-entry-timestamp {
+    color: blue;
+}
+.log-entry-message {
+    margin-left: 4px;
+}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+<div class="center-container">
+    <div class="login-form" data-js-login-form>
+        <div class="login-text">Login</div>
+        <div class="login-form-panel clearfix">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="input-username" class="col-sm-2 control-label">Username</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="input-username" data-js-username placeholder="Username">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input-password" class="col-sm-2 control-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" data-js-password placeholder="Password">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" data-js-login-button>Login</button>
+          </form>
+        </div>
+    </div>
+    <div class="canvas-container" data-js-canvas-container>
+        <div class="flex-container">
+            <div class="title-panel">shared_canvas_channels</div>
+            <canvas id="sketch" class="sketch" width="500" height="500" data-js-sketch></canvas>
+            <div class="log-panel" daja-js-log-panel>
+                <div class="log-panel-title">log messages</div>
+                <div class="log-entries" data-js-log-entries>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'handlebars/handlebars.js' %}"></script>
+<script src="{% static 'js/sketch.js' %}"></script>
+<script src="{% static 'js/shared_canvas_channels.js' %}"></script>
+
+{% verbatim %}
+<script type="text/x-handlebars-template" data-js-log-entry-template>
+    <div class="log-entry"><span class="log-entry-timestamp">{{timestamp}}</span><span class="log-entry-message">{{message}}</span></div>
+</script>
+{% endverbatim %}
+{% endblock extra_js %}
