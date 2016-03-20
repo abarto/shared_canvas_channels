@@ -144,3 +144,5 @@ BOWER_INSTALLED_APPS = (
     'bootstrap',
     'handlebars'
 )
+
+JWT_ALLOW_REFRESH = True

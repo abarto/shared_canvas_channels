@@ -26,6 +26,10 @@ body {
     padding: 10px;
 }
 
+.login-alert {
+    display: none;
+}
+
 .canvas-container {
     display: none;
     background-color: #ccc;
@@ -85,6 +89,12 @@ body {
 .log-entry-timestamp {
     color: blue;
 }
+
 .log-entry-message {
     margin-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /*width: 100px;*/
+    display: block;
+    overflow: hidden
 }

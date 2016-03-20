@@ -11,14 +11,19 @@
             <div class="form-group">
               <label for="input-username" class="col-sm-2 control-label">Username</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="input-username" data-js-username placeholder="Username">
+                <input type="email" class="form-control" id="input-username" data-js-username placeholder='Username ("admin", "user1", "user2")'>
               </div>
             </div>
             <div class="form-group">
               <label for="input-password" class="col-sm-2 control-label">Password</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" data-js-password placeholder="Password">
+                <input type="password" class="form-control" id="password" data-js-password placeholder='Password ("secret")'>
               </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-danger login-alert" role="alert" data-js-login-alert>Unable to login</div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary pull-right" data-js-login-button>Login</button>
           </form>
@@ -45,7 +50,11 @@
 
 {% verbatim %}
 <script type="text/x-handlebars-template" data-js-log-entry-template>
-    <div class="log-entry"><span class="log-entry-timestamp">{{timestamp}}</span><span class="log-entry-message">{{message}}</span></div>
+    <div class="log-entry" title="{{message}}"><div class="log-entry-timestamp">{{timestamp}}</div><div class="log-entry-message">{{message}}</div></div>
 </script>
 {% endverbatim %}
+
+<script>
+    var obtainJwtTokenUrl = "{% url 'obtain_jwt_token' %}";
+</script>
 {% endblock extra_js %}
