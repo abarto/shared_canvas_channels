@@ -54,7 +54,15 @@ $(function() {
         );
     }
 
-    $('[data-js-sketch]').sketch();
+    var $sketchElement = $("[data-js-sketch]");
+    $sketchElement.sketch();
+    var sketch = $sketchElement.data("sketch");
+
+    $.sketch.tools.marker.__original_draw = $.sketch.tools.marker.draw
+    $.sketch.tools.marker.draw = function(action) {
+        $.sketch.tools.marker.__original_draw.call(sketch, action);
+    }
+
     $('[data-js-login-button]').click(function(event) {
         console.log('[data-js-login-button] click', event);
         event.preventDefault();
