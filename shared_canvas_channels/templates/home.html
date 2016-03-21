@@ -3,8 +3,8 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="center-container">
-    <div class="login-form" data-js-login-form>
+<div class="center-container" data-js-center-container>
+    <div class="login-form">
         <div class="login-text">Login</div>
         <div class="login-form-panel clearfix">
           <form class="form-horizontal">
@@ -29,32 +29,16 @@
           </form>
         </div>
     </div>
-    <div class="canvas-container" data-js-canvas-container>
-        <div class="flex-container">
-            <div class="title-panel">shared_canvas_channels</div>
-            <canvas id="sketch" class="sketch" width="500" height="500" data-js-sketch></canvas>
-            <div class="log-panel" daja-js-log-panel>
-                <div class="log-panel-title">log messages</div>
-                <div class="log-entries" data-js-log-entries>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+<div class="sketch" data-js-sketch></div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'handlebars/handlebars.js' %}"></script>
 <script src="{% static 'js/sketch.js' %}"></script>
 <script src="{% static 'js/shared_canvas_channels.js' %}"></script>
 
-{% verbatim %}
-<script type="text/x-handlebars-template" data-js-log-entry-template>
-    <div class="log-entry" title="{{message}}"><div class="log-entry-timestamp">{{timestamp}}</div><div class="log-entry-message">{{message}}</div></div>
-</script>
-{% endverbatim %}
-
 <script>
     var obtainJwtTokenUrl = "{% url 'obtain_jwt_token' %}";
+    var webSocketUrl = "ws://localhost:8001";
 </script>
 {% endblock extra_js %}

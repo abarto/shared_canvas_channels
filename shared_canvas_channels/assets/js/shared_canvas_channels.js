@@ -1,17 +1,7 @@
 $(function() {
     var token = null;
-
-    var logEntryTemplate = Handlebars.compile($("[data-js-log-entry-template]").html());
-    var $logEntries = $("[data-js-log-entries]");
-
-    function writeLogEntry(message) {
-        var $logEntry = logEntryTemplate({
-            "timestamp": new Date().toUTCString(),
-            "message": message
-        });
-        $logEntries.append($logEntry);
-        $logEntries.scrollTop($logEntries.prop('scrollHeight'));
-    }
+    var socket = null;
+    var sketch = null;
 
     function getCredentials() {
         return {
@@ -31,6 +21,64 @@ $(function() {
         .done(done);
     }
 
+    function openWebSocket() {
+        console.log('openWebSocket');
+
+        socket = new WebSocket(
+            webSocketUrl + "?" + $.param({"token": token})
+        );
+
+        socket.onopen = function(event) {
+        }
+        socket.onmessage = function(event) {
+            touch = $.parseJSON(event.data);
+
+            sketch.beginPath();
+            sketch.moveTo( touch.ox, touch.oy );
+            sketch.lineTo( touch.x, touch.y );
+            sketch.stroke();
+        }
+        socket.onclose = function(event) {
+        }
+        socket.onerror = function(event) {
+        }
+    }
+
+    function setUpSketch() {
+        sketch = Sketch.create({
+            container: $("[data-js-sketch]")[0],
+            autoclear: false,
+
+            setup: function() {
+                this.fillStyle = this.strokeStyle = '#000000';
+                this.lineCap = 'round';
+                this.lineJoin = 'round';
+                this.lineWidth = 5;
+            },
+
+            update: function() {
+            },
+
+            keydown: function() {
+                if (this.keys.C) this.clear();
+            },
+
+            touchmove: function() {
+                if (this.dragging) {
+                    touch = this.touches[0];
+                    if (socket !== null) {
+                        socket.send(JSON.stringify(touch));
+                    } else {
+                        sketch.beginPath();
+                        sketch.moveTo( touch.ox, touch.oy );
+                        sketch.lineTo( touch.x, touch.y );
+                        sketch.stroke();
+                    }
+                }
+            }
+        });
+    }
+
     function handleLoginFail(jqXHR, textStatus, errorThrown) {
         console.log('fail', jqXHR, textStatus, errorThrown);
         $("[data-js-login-alert]").fadeIn(100).delay(2000).fadeOut(100);
@@ -41,26 +89,18 @@ $(function() {
 
         token = data["token"];
 
-        $('[data-js-login-form]').hide(
+        $('[data-js-center-container]').hide(
             100,
             function() {
-                $('[data-js-canvas-container]').show(
+                $('[data-js-sketch]').show(
                     100,
                     function() {
-                        writeLogEntry("logged in successfully. token = " + JSON.stringify(data));
+                        openWebSocket();
+                        setUpSketch();
                     }
                 );
             }
         );
-    }
-
-    var $sketchElement = $("[data-js-sketch]");
-    $sketchElement.sketch();
-    var sketch = $sketchElement.data("sketch");
-
-    $.sketch.tools.marker.__original_draw = $.sketch.tools.marker.draw
-    $.sketch.tools.marker.draw = function(action) {
-        $.sketch.tools.marker.__original_draw.call(sketch, action);
     }
 
     $('[data-js-login-button]').click(function(event) {

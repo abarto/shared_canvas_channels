@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    'channels'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -146,3 +147,13 @@ BOWER_INSTALLED_APPS = (
 )
 
 JWT_ALLOW_REFRESH = True
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+        "ROUTING": "shared_canvas_channels.routing.channel_routing"
+    },
+}
