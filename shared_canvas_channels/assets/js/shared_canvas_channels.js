@@ -25,12 +25,14 @@ $(function() {
         console.log('openWebSocket');
 
         socket = new WebSocket(
-            webSocketUrl + "?" + $.param({"token": token})
+            webSocketUrl + "?" + $.param({"token": token, "reason": "auth"})
         );
 
         socket.onopen = function(event) {
+            console.log("opopen", event);
         }
         socket.onmessage = function(event) {
+            console.log("onmessage", event);
             touch = $.parseJSON(event.data);
 
             sketch.beginPath();
@@ -39,8 +41,10 @@ $(function() {
             sketch.stroke();
         }
         socket.onclose = function(event) {
+            console.log("onclose", event);
         }
         socket.onerror = function(event) {
+            console.log("onerror", event);
         }
     }
 
@@ -67,6 +71,7 @@ $(function() {
                 if (this.dragging) {
                     touch = this.touches[0];
                     if (socket !== null) {
+                        touch["token"] = token;
                         socket.send(JSON.stringify(touch));
                     } else {
                         sketch.beginPath();
