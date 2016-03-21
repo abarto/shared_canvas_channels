@@ -142,8 +142,7 @@ STATICFILES_FINDERS = [
 BOWER_COMPONENTS_ROOT = os.path.join(os.path.abspath(BASE_DIR), 'components')
 BOWER_INSTALLED_APPS = (
     'jquery',
-    'bootstrap',
-    'handlebars'
+    'bootstrap'
 )
 
 JWT_ALLOW_REFRESH = True
