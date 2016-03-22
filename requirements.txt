@@ -1,5 +1,5 @@
 Django==1.9.4
-git+https://github.com/abarto/django-jwt-auth.git
+git+https://github.com/abarto/django-jwt-auth.git@implement-refresh
 channels==0.9.5
 asgiref==0.9.1
 daphne==0.9.3
