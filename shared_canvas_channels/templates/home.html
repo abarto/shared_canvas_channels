@@ -25,12 +25,24 @@
                     <div class="alert alert-danger login-alert" role="alert" data-js-login-alert>Unable to login</div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary pull-right" data-js-login-button>Login</button>
+            <button type="submit" class="btn btn-default pull-right" data-js-login-button>Login</button>
           </form>
         </div>
     </div>
 </div>
 <div class="sketch" data-js-sketch></div>
+<div class="modal fade" tabindex="-1" role="dialog" data-js-disconnect-modal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span data-js-disconnect-message>Lost connection with the server.</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-js-reconnect-button>Reconnect</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -39,6 +51,7 @@
 
 <script>
     var obtainJwtTokenUrl = "{% url 'obtain_jwt_token' %}";
+    var refreshJwtTokenUrl = "{% url 'refresh_jwt_token' %}";
     var webSocketUrl = "ws://localhost:8001";
 </script>
 {% endblock extra_js %}

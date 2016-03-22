@@ -1,8 +1,8 @@
-$(function() {
-    var token = null;
-    var socket = null;
-    var sketch = null;
+var token = null;
+var socket = null;
+var sketch = null;
 
+$(function() {
     function getCredentials() {
         return {
             "username": $("[data-js-username]").val(),
@@ -21,11 +21,33 @@ $(function() {
         .done(done);
     }
 
+    function refreshJwtToken(url, old_token, fail, done) {
+        $.ajax({
+            url: url,
+            data: JSON.stringify({"token": old_token}),
+            contentType: "application/json",
+            method: "POST",
+            beforeSend: function(jqXHR) {
+                jqXHR.setRequestHeader("Authorization", "Bearer " + old_token);
+            }
+        })
+        .fail(fail)
+        .done(done);
+    }
+
+    function showDisconnectModal() {
+        $("[data-js-disconnect-modal]").modal({"keyboard": false});
+    }
+
+    function hideDisconnectModal() {
+        $("[data-js-disconnect-modal]").modal('hide');
+    }
+
     function openWebSocket() {
         console.log('openWebSocket');
 
         socket = new WebSocket(
-            webSocketUrl + "?" + $.param({"token": token, "reason": "auth"})
+            webSocketUrl + "?" + $.param({"token": token})
         );
 
         socket.onopen = function(event) {
@@ -36,12 +58,13 @@ $(function() {
             touch = $.parseJSON(event.data);
 
             sketch.beginPath();
-            sketch.moveTo( touch.ox, touch.oy );
-            sketch.lineTo( touch.x, touch.y );
+            sketch.moveTo(touch.ox, touch.oy);
+            sketch.lineTo(touch.x, touch.y);
             sketch.stroke();
         }
         socket.onclose = function(event) {
             console.log("onclose", event);
+            showDisconnectModal();
         }
         socket.onerror = function(event) {
             console.log("onerror", event);
@@ -85,12 +108,12 @@ $(function() {
     }
 
     function handleLoginFail(jqXHR, textStatus, errorThrown) {
-        console.log('fail', jqXHR, textStatus, errorThrown);
+        console.log('handleLoginFail', jqXHR, textStatus, errorThrown);
         $("[data-js-login-alert]").fadeIn(100).delay(2000).fadeOut(100);
     }
 
     function handleLoginDone(data, textStatus, jqXHR) {
-        console.log('done', data, textStatus, jqXHR);
+        console.log('handleLoginDone', data, textStatus, jqXHR);
 
         token = data["token"];
 
@@ -107,6 +130,31 @@ $(function() {
             }
         );
     }
+
+    function handleReconnectFail(jqXHR, textStatus, errorThrown) {
+        console.log('handleReconnectFail', jqXHR, textStatus, errorThrown);
+        $("[data-js-disconnect-message]").html('Unable to reconnect. Please check console logs.');
+    }
+
+    function handleReconnectDone(data, textStatus, jqXHR) {
+        console.log('handleReconnectDone', data, textStatus, jqXHR);
+
+        token = data["token"];
+        hideDisconnectModal();
+        openWebSocket();
+    }
+
+    $('[data-js-reconnect-button]').click(function(event) {
+        console.log('[data-js-reconnect-button] click', event);
+        event.preventDefault();
+
+        refreshJwtToken(
+            refreshJwtTokenUrl,
+            token,
+            handleReconnectFail,
+            handleReconnectDone
+        );
+    });
 
     $('[data-js-login-button]').click(function(event) {
         console.log('[data-js-login-button] click', event);
