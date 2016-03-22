@@ -34,9 +34,9 @@ Vagrant.configure(2) do |config|
     source shared_canvas_channels_venv/bin/activate
     curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python
 
-    pip install -r tracker_project/requirements.txt
+    pip install -r shared_canvas_channels/requirements.txt
 
-    cd tracker_project/shared_canvas_channels/
+    cd shared_canvas_channels/shared_canvas_channels/
 
     nodeenv --prebuilt --python-virtualenv
     npm install --global bower
