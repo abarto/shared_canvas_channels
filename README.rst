@@ -6,6 +6,11 @@ This project was coded to test how to use `JSON WebTokens <https://jwt.io/>`_ (J
 
 I'm using a `forked version <https://github.com/abarto/django-jwt-auth>`_ of `django-jwt-auth <https://github.com/jpadilla/django-jwt-auth>`_ that provides JWT authentication and allows for token refresh.
 
+offload-saving branch
+=====================
+
+This branch was created to demonstrate how to offload work using a Channel. When a message is received, it is sent to the Group that delivers it to all connected clients, but we also send the message content (alongside the id of the user who sent it) to the "save_message" Channel. When the new message is routed to the consumer, a new ``Message`` model instance is created with the information. With this, we offloaded the registration of the received message to a specific channel.
+
 The application
 ===============
 
