@@ -6,6 +6,11 @@ This project was coded to test how to use `JSON WebTokens <https://jwt.io/>`_ (J
 
 I'm using a `forked version <https://github.com/abarto/django-jwt-auth>`_ of `django-jwt-auth <https://github.com/jpadilla/django-jwt-auth>`_ that provides JWT authentication and allows for token refresh.
 
+2016.03.29 Update
+=================
+
+I've created the `offload-saving <https://github.com/abarto/shared_canvas_channels/tree/offload-saving>`_ branch to demonstrate how to use channels to offload work to separate consumers and workers.
+
 The application
 ===============
 
