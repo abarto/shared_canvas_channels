@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
-    'channels'
+    'channels',
+    'shared_canvas'
 ]
 
 MIDDLEWARE_CLASSES = [
